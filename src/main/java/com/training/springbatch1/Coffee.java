@@ -12,22 +12,12 @@ public class Coffee {
     @Id
     @Column(name = "id")
     private Long id;
-
     @Column(name = "blend")
     private String blend;
     @Column(name = "strength")
     private String strength;
     @Column(name="origin")
     private String origin;
-
-    public Coffee() {
-    }
-
-    public Coffee(String blend, String strength, String origin) {
-        this.blend = blend;
-        this.strength = strength;
-        this.origin = origin;
-    }
 
     public Long getId() {
         return id;
