@@ -15,16 +15,13 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
-import java.util.Objects;
 import java.util.Properties;
 
 @EnableBatchProcessing
@@ -99,8 +96,8 @@ public class BatchConfiguration {
     public DataSource dataSource(){
         DriverManagerDataSource dataSources= new DriverManagerDataSource();
         dataSources.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSources.setUsername("Somewhere over the rainbow");
-        dataSources.setPassword("Way up high, There's a land that I heard of");
+        dataSources.setUsername("bg");
+        dataSources.setPassword("W0nd3rs!");
         dataSources.setUrl("jdbc:mysql://localhost:3306/hbdemo?createDatabaseIfNotExist=true");
 
         return dataSources;
@@ -113,6 +110,8 @@ public class BatchConfiguration {
                 .reader(reader())
                 .processor(processor())
                 .writer(jpaItemWriter())
+                .faultTolerant()
+                .skipPolicy(new CustomSkipPolicy())
                 .build();
     }
 
